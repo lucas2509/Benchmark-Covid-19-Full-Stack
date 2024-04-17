@@ -2,9 +2,9 @@
 
 ## 📃 Introdução
 
-A aplicação visa consumir rotas de API do servidor para realizar operações CRUD de benchmarks referentes à Covid-19 entre países ou cidades/estados. Além disso, a aplicação fornece dados estatísticos e gráficos sobre benchmark de alguma localidade em relação ao Covid-19 .
+A aplicação visa consumir rotas de API do servidor para realizar operações CRUD de benchmarks referentes à Covid-19 entre países ou cidades/estados. Além disso, a aplicação fornece dados estatísticos e gráficos sobre benchmarks de alguma localidade em relação ao Covid-19 .
 
-Para a produção de uma benchmark a seguinte API, setada em .env.development, é consumida para coleta de informações:
+Para a produção de uma benchmark, a seguinte API setada em .env.development é consumida para coleta de informações:
  - [Servidor] http://localhost:8080/api/benchmark
 
 ## 💻 Tecnologias usadas:
@@ -19,7 +19,7 @@ Para a produção de uma benchmark a seguinte API, setada em .env.development, �
 ## 💾 Instalações
 Há 2 maneiras diferentes para execução da aplicação, através do docker ou localmente:</br>
  - **Docker** : Para execução de maneira mais simples da aplicação é necessário ter instalado a ferramenta [docker-compose](https://docs.docker.com/compose/install/).</br>
- - **Localmente** : Para execução local da aplicação é necessário ter instalado [MySQL](https://www.mysql.com/downloads/), [Java](https://www.java.com/pt-BR/download/) (recomendável 17) e [Maven](https://maven.apache.org/download.cgi).
+ - **Localmente** : Para execução local da aplicação é necessário ter instalado o [Node.js](https://nodejs.org/en/download)
 
 ## 💿 Rodando a aplicação
 
