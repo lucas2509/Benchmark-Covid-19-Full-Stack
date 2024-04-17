@@ -1,0 +1,14 @@
+version: '2'
+services:
+  vite_docker:
+   image: node:alpine
+   container_name: vite_docker
+   entrypoint: /bin/sh
+   ports:
+     - 8000:5173
+   working_dir: /srv/app
+   volumes:
+     - type: bind
+       source: ./
+       target: /srv/app
+   tty: true
