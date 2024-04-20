@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import SecondModal from './SecondModal';
 
-const CustomModal = ({ isOpen, onRequestClose }) => {
+// Componente Modal para seleção do tipo de Benchmark
+export default function CustomModal ({ isOpen, onRequestClose }) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
-  const handleOptionClick = (option) => {
+  function handleOptionClick (option) {
     setSelectedOption(option);
     
     setIsSecondModalOpen(true);
   };
 
-  const handleCloseSecondModal = () => {
+  function handleCloseSecondModal () {
     setIsSecondModalOpen(false);
   };
 
@@ -42,31 +43,29 @@ const CustomModal = ({ isOpen, onRequestClose }) => {
             },
         }}
         >
-        <h2 style={{ marginBottom: '20px', fontSize: '24px' }}>Escolha uma opção:</h2>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <h2 style={{ marginBottom: '20px', fontSize: '24px' }}>Escolha uma opção:</h2>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <button
-            onClick={() => handleOptionClick('country')}
-            style={{ marginRight: '10px', padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
+              onClick={function() { handleOptionClick('country'); }}
+              style={{ marginRight: '10px', padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
             >
-            País
+              País
             </button>
             <button
-            onClick={() => handleOptionClick('state')}
-            style={{ marginRight: '10px', padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
+              onClick={function() { handleOptionClick('state'); }}
+              style={{ marginRight: '10px', padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
             >
-            Estado
+              Estado
             </button>
             <button
-            onClick={() => handleOptionClick('city')}
-            style={{ padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
+              onClick={function() { handleOptionClick('city'); }}
+              style={{ padding: '10px 20px', borderRadius: '5px', background: '#6c757d', color: '#fff', border: 'none' }}
             >
-            Cidade
+              Cidade
             </button>
-        </div>
-        <SecondModal isOpen={isSecondModalOpen} onRequestClose={handleCloseSecondModal} selectedOption={selectedOption} />
+          </div>
+          <SecondModal isOpen={isSecondModalOpen} onRequestClose={handleCloseSecondModal} selectedOption={selectedOption} />
         </Modal>
     </div>
   );
 };
-
-export default CustomModal;

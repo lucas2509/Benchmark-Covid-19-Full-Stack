@@ -1,5 +1,6 @@
 import ApexChart from 'react-apexcharts'
 
+//Componente de gráfico do tipo Linha
 export default function LineGraph({graphName,graphSerieName1,graphData1,graphSerieName2,graphData2}){
     
     const options = {

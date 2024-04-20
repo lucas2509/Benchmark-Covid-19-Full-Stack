@@ -6,7 +6,8 @@ import ResultCityStateComponent from '../components/ResultCityStateComponent';
 import DeleteBenchmarkModal from '../components/modal/DeleteBenchmarkModal';
 import UpdateBenchmarkModal from '../components/modal/UpdateBenchmarkModal';
 
-const BenchmarkPage = () => {
+//Página que exibe informações sobre o Benchmark
+export default function BenchmarkPage (){
   const { id } = useParams(); 
   const [benchmark, setBenchmark] = useState(null);
   const [isResultCountryComponentOpen, setIsResultCountryComponentOpen] = useState(false);
@@ -75,5 +76,3 @@ const BenchmarkPage = () => {
     </div>
   );
 };
-
-export default BenchmarkPage;

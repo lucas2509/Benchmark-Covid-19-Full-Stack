@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { FaSpinner } from 'react-icons/fa'; // Importando o ícone de carregamento
+import { FaSpinner } from 'react-icons/fa'; 
 import BenchmarkService from '../../service/BenchmarkService';
 import { useNavigate } from 'react-router-dom';
 
-const ThirdModal = ({ isOpen, onRequestClose , benchmark}) => {
+// Componente Modal para pesquisa/criação de um Benchmark
+export default function ThirdModal ({ isOpen, onRequestClose , benchmark}) {
   const navigateTo = useNavigate();
-  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
+  const [isLoading, setIsLoading] = useState(false); 
 
-  const handleCreateNewBenchmark = async () => {
-    setIsLoading(true); // Ativa o carregamento enquanto a solicitação está em andamento
+  async function handleCreateNewBenchmark() {
+    setIsLoading(true);
 
     try {
       const benchmarkCreate = await BenchmarkService.createBenchmark(benchmark);
@@ -19,7 +20,7 @@ const ThirdModal = ({ isOpen, onRequestClose , benchmark}) => {
       if (error.response.status === 400) alert('Por favor, verifique os parâmetros!');
     }
 
-    setIsLoading(false); // Desativa o carregamento após a conclusão da solicitação
+    setIsLoading(false);
   };
 
   return (
@@ -61,7 +62,7 @@ const ThirdModal = ({ isOpen, onRequestClose , benchmark}) => {
             border: 'none',
           }}
         >
-          {isLoading ? <FaSpinner className="spinner" /> : 'Sim'} {/* Exibe o ícone de carregamento se isLoading for verdadeiro */}
+          {isLoading ? <FaSpinner className="spinner" /> : 'Sim'}
         </button>
         <button
           onClick={onRequestClose}
@@ -79,5 +80,3 @@ const ThirdModal = ({ isOpen, onRequestClose , benchmark}) => {
     </Modal>
   );
 };
-
-export default ThirdModal;

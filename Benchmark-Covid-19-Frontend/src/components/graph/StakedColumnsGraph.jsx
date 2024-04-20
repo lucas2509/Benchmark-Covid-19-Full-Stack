@@ -1,5 +1,6 @@
 import Chart from 'react-apexcharts'
 
+//Componente de gráfico do tipo Colunas Empilhadas 
 export default function StakedColumnsGraph({resultsSumary, benchmarkData}){
     const options = {
         chart: {
@@ -27,8 +28,8 @@ export default function StakedColumnsGraph({resultsSumary, benchmarkData}){
           },
           xaxis: {
             categories: [
-              'Data inicial',
-              'Data final'
+              'Data inicial : '+benchmarkData.start_date,
+              'Data final: ' +benchmarkData.end_date
             ]
           },yaxis: {
             logarithmic: false,

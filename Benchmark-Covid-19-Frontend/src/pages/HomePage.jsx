@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import BenchmarkService from '../service/BenchmarkService';
 import CustomModal from '../components/modal/CustomModal';
 
-const HomePage = () => {
+//HomePage que exibe os ultimos benchmark criados
+export default function HomePage  () {
   const [benchmarks, setBenchmarks] = useState([]);
   const [isOpenCustomModal, setIsOpenCustomModal] = useState(false);
 
@@ -21,11 +22,11 @@ const HomePage = () => {
     fetchBenchmarks();
   }, []);
 
-  const openModal = () => {
+  function openModal ()  {
     setIsOpenCustomModal(true);
   };
 
-  const closeModal = () => {
+  function closeModal () {
     setIsOpenCustomModal(false);
   };
 
@@ -55,5 +56,3 @@ const HomePage = () => {
     </div>
   );
 };
-
-export default HomePage;

@@ -1,5 +1,6 @@
 import Chart from 'react-apexcharts';
 
+//Componente de gráfico do tipo barra
 export default function BarGraph({title,series,categorias}){
     var options = {
         chart: {

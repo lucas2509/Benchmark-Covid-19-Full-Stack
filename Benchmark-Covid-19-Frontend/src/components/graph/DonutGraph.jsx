@@ -1,5 +1,6 @@
 import Chart from 'react-apexcharts';
 
+//Componente de gráfico do tipo Donut
 export default function DonutGraph({title,series,label}){
     var options = {
         chart: {

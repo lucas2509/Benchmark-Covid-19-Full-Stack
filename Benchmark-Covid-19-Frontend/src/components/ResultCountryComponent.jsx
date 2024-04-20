@@ -4,7 +4,8 @@ import BenchmarkService from '../service/BenchmarkService';
 import LineGraph from './graph/LineGraph';
 import StakedColumnsGraph from './graph/StakedColumnsGraph';
 
-const ResultCountryComponent = ({benchmark}) => {
+//Componente que exibe o resultado do Benchmark entre paises
+export default function ResultCountryComponent({benchmark}){
   const [benchmarkData, setBenchmarkData] = useState([]);
   const [results, setResults] = useState([]);
   const [resultsCasesContry1, setCasesCountry1] = useState([]);
@@ -14,7 +15,7 @@ const ResultCountryComponent = ({benchmark}) => {
   const [resultsSumary, setResultsSumary] = useState([]);
   
   useEffect(() => {
-    const fetchBenchmarks = async () => {
+    async function fetchBenchmarks () {
       try {
         if (benchmark) {
           setBenchmarkData(benchmark);
@@ -148,5 +149,3 @@ const ResultCountryComponent = ({benchmark}) => {
     </div>
   );
 };
-
-export default ResultCountryComponent;

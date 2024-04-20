@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import BenchmarkService from '../../service/BenchmarkService';
 import ThirdModal from './ThirdModal';
 
-const SecondModal = ({ isOpen, onRequestClose, selectedOption }) => {
+// Componente Modal para seleção dos parametros do Benchmark
+export default function SecondModal({ isOpen, onRequestClose, selectedOption }) {
   const navigateTo = useNavigate();
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -15,23 +16,20 @@ const SecondModal = ({ isOpen, onRequestClose, selectedOption }) => {
   });
   const [benchmark, setBenchmark] = useState(false);
 
-  const handleCloseThirdModal = () => {
+  function handleCloseThirdModal() {
     setIsThirdModalOpen(false);
-  };
+  }
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
+  }
 
-  const closeThirdModal = () => {
+  function closeThirdModal() {
     setIsThirdModalOpen(false);
-  };
+  }
 
-  const handleButtonClick = async () => {
-    // Aqui você pode fazer o que desejar com os dados do formulário
-    // Por exemplo, chamar uma função para enviar os dados para a API
-
+  async function handleButtonClick() {
     if (!formData.startDate || !formData.endDate || !formData.placeName1 || !formData.placeName2) {
         alert('Por favor, preencha todos os campos.');
         return; 
@@ -53,8 +51,7 @@ const SecondModal = ({ isOpen, onRequestClose, selectedOption }) => {
     }catch (error) {
         if(error.response.status == 404) setIsThirdModalOpen(true);
     }
-    
-  };
+  }
 
   return (
     <div>
@@ -107,5 +104,3 @@ const SecondModal = ({ isOpen, onRequestClose, selectedOption }) => {
     </div>
   );
 };
-
-export default SecondModal;

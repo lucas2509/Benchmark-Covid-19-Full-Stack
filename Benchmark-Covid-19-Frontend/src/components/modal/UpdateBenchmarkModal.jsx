@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import BenchmarkService from '../../service/BenchmarkService';
 import { useNavigate } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa'; // Importando o ícone de carregamento
+import { FaSpinner } from 'react-icons/fa'; 
 
-const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
+// Componente Modal para edição de um Benchmark
+export default function UpdateBenchmarkModal ({ isOpen, closeUpdateModal, benchmark }) {
   const navigateTo = useNavigate();
-  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o carregamento
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     start_date: '',
@@ -28,7 +29,7 @@ const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
     }
   }, [benchmark]);
 
-  const handleChange = (e) => {
+  function handleChange (e) {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -36,7 +37,7 @@ const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
     });
   };
 
-  const handleSubmit = async () => {
+  async function handleSubmit () {
     try {
       setIsLoading(true);
       await BenchmarkService.updateBenchmark(benchmark.id, formData);
@@ -74,44 +75,24 @@ const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
       }}
     >
       <h2 style={{ marginBottom: '20px', fontSize: '24px' }}>Atualizar Benchmark</h2>
-      <input
-        type="date"
-        name="start_date"
-        value={formData.start_date}
-        onChange={handleChange}
-        style={{ marginBottom: '10px' }}
-      />
-      <input
-        type="date"
-        name="end_date"
-        value={formData.end_date}
-        onChange={handleChange}
-        style={{ marginBottom: '10px' }}
-      />
-      <input
-        type="text"
-        name="place_type"
-        value={formData.place_type}
-        onChange={handleChange}
-        placeholder="Tipo de Lugar"
-        style={{ marginBottom: '10px' }}
-      />
-      <input
-        type="text"
-        name="place_name_1"
-        value={formData.place_name_1}
-        onChange={handleChange}
-        placeholder="Localização 1"
-        style={{ marginBottom: '10px' }}
-      />
-      <input
-        type="text"
-        name="place_name_2"
-        value={formData.place_name_2}
-        onChange={handleChange}
-        placeholder="Localização 2"
-        style={{ marginBottom: '20px' }}
-      />
+      <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="placeName1">Nome do Primeiro Lugar:</label>
+            <input type="text" name="place_name_1" value={formData.place_name_1} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="placeName2">Nome do Segundo Lugar:</label>
+            <input type="text" name="place_name_2" value={formData.place_name_2} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+        </div>
+        <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ marginRight: '20px' }}>
+            <label htmlFor="startDate">Data Inicial:</label>
+            <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+            </div>
+            <div>
+            <label htmlFor="endDate">Data Final:</label>
+            <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+            </div>
+        </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <button
           onClick={handleSubmit}
@@ -123,7 +104,7 @@ const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
             color: '#fff',
             border: 'none',
           }}
-        >{isLoading ? <FaSpinner className="spinner" /> : 'Atualizar'} {/* Exibe o ícone de carregamento se isLoading for verdadeiro */}
+        >{isLoading ? <FaSpinner className="spinner" /> : 'Atualizar'} 
         </button>
         <button
           onClick={closeUpdateModal}
@@ -141,5 +122,3 @@ const UpdateBenchmarkModal = ({ isOpen, closeUpdateModal, benchmark }) => {
     </Modal>
   );
 };
-
-export default UpdateBenchmarkModal;

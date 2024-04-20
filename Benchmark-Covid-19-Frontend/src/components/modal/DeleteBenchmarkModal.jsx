@@ -3,18 +3,20 @@ import Modal from 'react-modal';
 import BenchmarkService from '../../service/BenchmarkService';
 import { useNavigate } from 'react-router-dom';
 
-const DeleteBenchmarkModal = ({ isOpen, closeDeleteModal, id }) => {
+// Componente Modal para exclusão do Benchmark
+export default function DeleteBenchmarkModal({ isOpen, closeDeleteModal, id }) {
   const navigateTo = useNavigate();
 
-  const handleDelete = async () => {
-    try {
-      await BenchmarkService.deleteBenchmark(id);
-      closeDeleteModal();
-      navigateTo("/");
-    } catch (error) {
-      console.error('Erro ao excluir o benchmark:', error);
-    }
-  };
+  function handleDelete() {
+    BenchmarkService.deleteBenchmark(id)
+      .then(() => {
+        closeDeleteModal();
+        navigateTo("/");
+      })
+      .catch(error => {
+        console.error('Erro ao excluir o benchmark:', error);
+      });
+  }
 
   return (
     <Modal
@@ -72,6 +74,4 @@ const DeleteBenchmarkModal = ({ isOpen, closeDeleteModal, id }) => {
       </div>
     </Modal>
   );
-};
-
-export default DeleteBenchmarkModal;
+}
