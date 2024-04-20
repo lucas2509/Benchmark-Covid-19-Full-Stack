@@ -88,8 +88,13 @@ public class BenchmarkService {
         if(benchmark.getPlace_type().equals("country")) {
             resultCountryRepository.deleteByBenchmarkId(id);
             
+            // Atualiza os dados do benchmark com os novos dados
+            BeanUtils.copyProperties(updatedBenchmark, benchmark);
+
             List<ResultCountry> resultCountry = covidAPIService.getResultForCountry(benchmark);
             resultCountryRepository.saveAll(resultCountry);
+
+            return benchmarkRepository.save(benchmark);
         }
         // Verifica se o tipo de lugar é city ou state
         // Atualiza o registro ResultCityState do benchmark
@@ -99,11 +104,12 @@ public class BenchmarkService {
 			BeanUtils.copyProperties(newResult, benchmark.getResult());
 			resultCityStateRepository.save(benchmark.getResult());
 			updatedBenchmark.setResult(benchmark.getResult());
-        } else throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
-        
-        // Atualiza os dados do benchmark com os novos dados
-        BeanUtils.copyProperties(updatedBenchmark, benchmark);
-        return benchmarkRepository.save(benchmark);
+
+			// Atualiza os dados do benchmark com os novos dados
+	        BeanUtils.copyProperties(updatedBenchmark, benchmark);
+	        return benchmarkRepository.save(benchmark);
+        }
+        else throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
     }
 
     // Exclui um benchmark pelo ID
