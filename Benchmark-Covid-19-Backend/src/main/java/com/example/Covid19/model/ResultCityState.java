@@ -59,10 +59,12 @@ public class ResultCityState {
 		this.end_deaths__2 = end_deaths__2;
 	}
 	
-	public ResultCityState(int end_cases_1, int end_deaths__1, int end_estimated_population_1, float end_case_rate_1, float end_death_rate_1, 
-				  int start_cases_1, int start_deaths__1, int start_estimated_population_1, float start_case_rate_1,float start_death_rate_1, 
-				  int end_cases_2, int end_deaths_2, int end_estimated_population_2, float end_case_rate_2, float end_death_rate_2, 
-				  int start_cases_2, int start_deaths_2, int start_estimated_population_2, float start_case_rate_2, float start_death_rate_2) {
+	public ResultCityState(
+				  int start_cases_1, int start_deaths__1, int start_estimated_population_1, float start_case_rate_1,float start_death_rate_1,
+				  int start_cases_2, int start_deaths_2, int start_estimated_population_2, float start_case_rate_2, float start_death_rate_2,
+				  int end_cases_1, int end_deaths__1, int end_estimated_population_1, float end_case_rate_1, float end_death_rate_1,  
+				  int end_cases_2, int end_deaths_2, int end_estimated_population_2, float end_case_rate_2, float end_death_rate_2 
+				  ) {
 		super();
 		this.start_cases_1 = start_cases_1;
 		this.start_deaths__1 = start_deaths__1;
