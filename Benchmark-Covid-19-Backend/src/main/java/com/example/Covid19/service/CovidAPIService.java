@@ -130,23 +130,23 @@ public class CovidAPIService {
 			count++;
 		}
 
-	// Cria uma nova lista de resultados ordenada crescente em relacao a data
-	List<CovidDataResult> covidDataResultListOrdened = new ArrayList<>(covidDataResultList);
-	Collections.sort(covidDataResultListOrdened, Comparator.comparing(CovidDataResult::getDate));
-	isDateFound = false;
-	count = 0;
-	// Percorre a lista para para procurar uma data aproximada da data final do Benchmark
-	while(!isDateFound && count < covidDataResultListOrdened.size() - 1) {
-		LocalDate auxDate = covidDataResultListOrdened.get(count).getDate();
-		LocalDate nextDate = covidDataResultListOrdened.get(count + 1).getDate();
-
-		if(!auxDate.isBefore(benchmark.getEnd_date()) && auxDate.isEqual(nextDate)) {
-			matchingResponses.add(covidDataResultListOrdened.get(count));
-			matchingResponses.add(covidDataResultListOrdened.get(count + 1));
-			isDateFound = true;
+		// Cria uma nova lista de resultados ordenada crescente em relacao a data
+		List<CovidDataResult> covidDataResultListOrdened = new ArrayList<>(covidDataResultList);
+		Collections.sort(covidDataResultListOrdened, Comparator.comparing(CovidDataResult::getDate));
+		isDateFound = false;
+		count = 0;
+		// Percorre a lista para para procurar uma data aproximada da data final do Benchmark
+		while(!isDateFound && count < covidDataResultListOrdened.size() - 1) {
+			LocalDate auxDate = covidDataResultListOrdened.get(count).getDate();
+			LocalDate nextDate = covidDataResultListOrdened.get(count + 1).getDate();
+	
+			if(!auxDate.isBefore(benchmark.getEnd_date()) && auxDate.isEqual(nextDate)) {
+				matchingResponses.add(covidDataResultListOrdened.get(count));
+				matchingResponses.add(covidDataResultListOrdened.get(count + 1));
+				isDateFound = true;
+			}
+			count++;
 		}
-		count++;
-	}
 
 	return matchingResponses;
     }
