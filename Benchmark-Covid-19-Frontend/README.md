@@ -14,7 +14,7 @@ Para a produção de uma benchmark, a seguinte API setada em .env.development é
 - React.JS (Biblioteca Javascript para desenvolvimento de UI)
 - Vite.JS (Framework para desenvolvimento WEB)
 - ApexCharts (Biblioteca para geração de gráficos)
-- Docker-Compose (Execução da Aplicação e do Banco de Dados em contêineres)
+- Docker-Compose (Execução da Aplicação em contêiner)
 
 ## 💾 Instalações
 Há 2 maneiras diferentes para execução da aplicação, através do docker ou localmente:</br>
@@ -25,7 +25,7 @@ Há 2 maneiras diferentes para execução da aplicação, através do docker ou 
 
 **Docker** : Para iniciar a aplicação utilizando docker, apenas utilize o comando:
 
-    $ docker-compose up -d
+    $ docker-compose up
 **Local** : Para iniciar a aplicação localmente, utilize o comando:
 
     $ npm i
