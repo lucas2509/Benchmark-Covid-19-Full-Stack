@@ -98,6 +98,8 @@ export default function SecondModal({ isOpen, onRequestClose, selectedOption }) 
             <input type="date" id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
             </div>
         </div>
+        {(selectedOption === 'city' || selectedOption === 'state') && (<p>Escolha uma data entre 04/2020 até 11/2021.</p>)}
+        {(selectedOption === 'country') && (<p>Escolha uma data entre 02/2020 até 02/2022.</p>)}
         <button onClick={handleButtonClick} style={{ padding: '10px 20px', borderRadius: '5px', background: '#007bff', color: '#fff', border: 'none' }}>Obter benchmark</button>
         </Modal>
         <ThirdModal isOpen={isThirdModalOpen} onRequestClose={handleCloseThirdModal} closeThirdModal={closeThirdModal}  benchmark={benchmark}/>

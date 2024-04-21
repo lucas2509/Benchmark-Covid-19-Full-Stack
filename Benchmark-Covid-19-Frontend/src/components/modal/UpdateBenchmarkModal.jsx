@@ -93,6 +93,8 @@ export default function UpdateBenchmarkModal ({ isOpen, closeUpdateModal, benchm
             <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} style={{ margin: '0 10px', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
             </div>
         </div>
+        {(formData.place_type === 'city' || formData.place_type === 'state') && (<p>Escolha uma data entre 04/2020 até 11/2021.</p>)}
+        {(formData.place_type === 'country') && (<p>Escolha uma data entre 02/2020 até 02/2022.</p>)}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <button
           onClick={handleSubmit}
