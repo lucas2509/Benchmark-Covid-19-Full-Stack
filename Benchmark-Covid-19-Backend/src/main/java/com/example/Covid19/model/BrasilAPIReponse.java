@@ -1,5 +1,6 @@
 package com.example.Covid19.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ public class BrasilAPIReponse {
 	    private float confirmedPer100kInhabitants;
 	    
 	    // Data do dado
-	    private String date;
+	    private LocalDate date;
 	    
 	    // Taxa de mortalidade
 	    @JsonProperty("death_rate")
@@ -46,7 +47,7 @@ public class BrasilAPIReponse {
 			return confirmed;
 		}
 	    
-	    public String getDate() {
+	    public LocalDate getDate() {
 			return date;
 		}
 

@@ -2,6 +2,8 @@ package com.example.Covid19.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
@@ -61,22 +63,9 @@ public class CovidAPIService {
     // Obtém resultados de um benchmark entre cidades ou estados
     public ResultCityState getResultForCityOrState(Benchmark benchmark) {
         ResultCityState result = null;
-        List<BrasilAPIReponse> listaBrasilAPIResponse = new ArrayList<>();
-        
-        // Obtém os dados da Covid19 para os locais definidos no benchmark
-        listaBrasilAPIResponse.add(getBrasilAPIResponse(benchmark.getPlace_type(), benchmark.getPlace_name_1()));
-        listaBrasilAPIResponse.add(getBrasilAPIResponse(benchmark.getPlace_type(), benchmark.getPlace_name_2()));
-        
-        // Encontra os registros que correspondem com a data inicial ou data final do benchmark
-        List<CovidDataResult> matchingResponses = new ArrayList<>();
-        for (CovidDataResult response : listaBrasilAPIResponse.get(0).getResults()) {
-            if (response.getDate().equals(benchmark.getStart_date().toString()) || response.getDate().equals(benchmark.getEnd_date().toString()))
-                matchingResponses.add(response);
-        }
-        for (CovidDataResult response : listaBrasilAPIResponse.get(1).getResults()) {
-            if (response.getDate().equals(benchmark.getStart_date().toString()) || response.getDate().equals(benchmark.getEnd_date().toString()))
-                matchingResponses.add(response);
-        }
+
+        // Encontra os registros que correspondem com a data inicial ou data final aproximada do benchmark
+        List<CovidDataResult> matchingResponses = findMatchCityState(benchmark);
         
         // Cria um objeto do tipo ResultCityState a partir dos 4 registros encontrados na seguinte ordem:
         // (Data final / Pais 1), (Data inicial / Pais 1), (Data final / Pais 2) e (Data inicial / Pais 2)
@@ -105,7 +94,61 @@ public class CovidAPIService {
         } 
         else throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         
+        //Ajuste para caso de os resultados serem de datas aproximadas
+        benchmark.setStart_date(matchingResponses.get(0).getDate());
+        benchmark.setEnd_date(matchingResponses.get(2).getDate());
+
         return result;
+    }
+
+	// Obtém os resultados para as datas inicial e final do benchmark dos locais 1 e 2
+	public  List<CovidDataResult> findMatchCityState(Benchmark benchmark) {
+		int count;
+		Boolean isDateFound;
+		List<CovidDataResult> covidDataResultList = new ArrayList<>();
+		List<CovidDataResult> matchingResponses = new ArrayList<>();
+
+		// Obtém os dados da Covid19 para os locais definidos no benchmark
+		covidDataResultList.addAll(getBrasilAPIResponse(benchmark.getPlace_type(), benchmark.getPlace_name_1()).getResults());
+		covidDataResultList.addAll(getBrasilAPIResponse(benchmark.getPlace_type(), benchmark.getPlace_name_2()).getResults());
+
+		// Cria uma nova lista de resultados ordenada decresente em relacao a data
+		List<CovidDataResult> covidDataResultListReversed = new ArrayList<>(covidDataResultList);
+		Collections.sort(covidDataResultListReversed, Comparator.comparing(CovidDataResult::getDate).reversed());
+		isDateFound = false;
+		count = 0;
+		// Percorre a lista para para procurar uma data aproximada da data inicial do Benchmark
+		while(!isDateFound && count < covidDataResultListReversed.size() - 1) {
+			LocalDate auxDate = covidDataResultListReversed.get(count).getDate();
+			LocalDate nextDate = covidDataResultListReversed.get(count + 1).getDate();
+
+			if(!auxDate.isAfter(benchmark.getStart_date()) && auxDate.isEqual(nextDate)) {
+				matchingResponses.add(covidDataResultListReversed.get(count));
+				matchingResponses.add(covidDataResultListReversed.get(count + 1));
+				isDateFound = true;
+			}
+			count++;
+		}
+
+	// Cria uma nova lista de resultados ordenada crescente em relacao a data
+	List<CovidDataResult> covidDataResultListOrdened = new ArrayList<>(covidDataResultList);
+	Collections.sort(covidDataResultListOrdened, Comparator.comparing(CovidDataResult::getDate));
+	isDateFound = false;
+	count = 0;
+	// Percorre a lista para para procurar uma data aproximada da data final do Benchmark
+	while(!isDateFound && count < covidDataResultListOrdened.size() - 1) {
+		LocalDate auxDate = covidDataResultListOrdened.get(count).getDate();
+		LocalDate nextDate = covidDataResultListOrdened.get(count + 1).getDate();
+
+		if(!auxDate.isBefore(benchmark.getEnd_date()) && auxDate.isEqual(nextDate)) {
+			matchingResponses.add(covidDataResultListOrdened.get(count));
+			matchingResponses.add(covidDataResultListOrdened.get(count + 1));
+			isDateFound = true;
+		}
+		count++;
+	}
+
+	return matchingResponses;
     }
    
     // Obtém resposta da API Brasil.IO para um local específico
