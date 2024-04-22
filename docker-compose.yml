@@ -1,0 +1,30 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: covid19
+      
+  app:
+    container_name: covid19-backend
+    restart: always
+    build: ./Benchmark-Covid-19-Backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/covid19
+    depends_on :
+      - mysql
+      
+  react_docker:
+    container_name: react_app
+    restart: always
+    build: ./Benchmark-Covid-19-Frontend
+    ports:
+      - "80:5173"
+    depends_on :
+      - app
